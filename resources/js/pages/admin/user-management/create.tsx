@@ -68,7 +68,7 @@ export default function UserCreateForm({ onClose }: Props) {
             </div>
 
             <div className="flex justify-end space-x-2">
-                <Button type="button" variant="outline" onClick={onClose}>
+                <Button type="button" variant="outline" onClick={onClose} disabled={processing}>
                     Cancel
                 </Button>
                 <Button type="submit" disabled={processing}>

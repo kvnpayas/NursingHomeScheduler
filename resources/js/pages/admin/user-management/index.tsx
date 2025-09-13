@@ -14,9 +14,10 @@ import { Button } from '@/components/ui/button';
 import { route } from 'ziggy-js';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import UserCreateForm from './create';
+import EditUserForm from './edit';
 import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Megaphone } from 'lucide-react';
+import { Megaphone, UserPen, UserRoundX } from 'lucide-react';
 import { Interface } from 'readline';
 import { Badge } from '@/components/ui/badge';
 
@@ -45,7 +46,14 @@ interface PageProps {
 
 export default function UserManagement() {
     const [open, setOpen] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<any | null>(null);
     const { users, flash } = usePage().props as PageProps;
+
+    const handleUpdate = (user: any) => {
+        setSelectedUser(user);
+        setOpenEdit(true);
+    };
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="User Management" />
@@ -62,20 +70,10 @@ export default function UserManagement() {
                 )}
                 <div className="flex justify-end">
                     <Button onClick={() => setOpen(true)}>Create User</Button>
-
-                    <Dialog open={open} onOpenChange={setOpen}>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Create User</DialogTitle>
-                            </DialogHeader>
-
-                            <UserCreateForm onClose={() => setOpen(false)} />
-                        </DialogContent>
-                    </Dialog>
                 </div>
                 <div className='border rounded-lg p-4 shadow'>
                     <Table>
-                        <TableCaption>A list of your recent invoices.</TableCaption>
+                        <TableCaption>A list of all users registered on the system.</TableCaption>
                         <TableHeader>
                             <TableRow>
                                 <TableHead className="w-[100px]">Id</TableHead>
@@ -90,7 +88,7 @@ export default function UserManagement() {
                         <TableBody>
                             {users.length > 0 && (
                                 users.map((user) => (
-                                    <TableRow>
+                                    <TableRow key={user.id}>
                                         <TableCell className="font-medium">{user.id}</TableCell>
                                         <TableCell>{user.name}</TableCell>
                                         <TableCell>{user.email}</TableCell>
@@ -109,12 +107,49 @@ export default function UserManagement() {
                                                 </span>
                                             </Badge>
                                         </TableCell>
+                                        <TableCell className='flex space-x-2'>
+                                            <Button size='sm' onClick={() => handleUpdate(user)} >
+                                                <UserPen className='h-4 w-4' />
+                                                Edit
+                                            </Button>
+                                            {/* <Button variant='destructive' size='sm'>
+                                                <UserRoundX className='h-4 w-4' />
+                                                Delete
+                                            </Button> */}
+                                        </TableCell>
                                     </TableRow>
                                 ))
                             )}
                         </TableBody>
                     </Table>
                 </div>
+
+                {/* Create Dialog */}
+                <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogContent onInteractOutside={(e) => e.preventDefault()}
+                        onEscapeKeyDown={(e) => e.preventDefault()}>
+                        <DialogHeader>
+                            <DialogTitle>Create User</DialogTitle>
+                        </DialogHeader>
+
+                        <UserCreateForm onClose={() => setOpen(false)} />
+                    </DialogContent>
+                </Dialog>
+
+                {/* Edit Dialog */}
+                <Dialog open={openEdit} onOpenChange={setOpenEdit}>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Edit User</DialogTitle>
+                        </DialogHeader>
+                        {selectedUser && (
+                            <EditUserForm
+                                user={selectedUser}
+                                onClose={() => setOpenEdit(false)}
+                            />
+                        )}
+                    </DialogContent>
+                </Dialog>
             </div>
         </AppLayout>
     );

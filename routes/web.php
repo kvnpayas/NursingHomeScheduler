@@ -18,8 +18,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('admin-dashboard');
 
     Route::get('/admin/user-management', [UserController::class, 'index'])->name('admin.user-management');
-    Route::get('/admin/user-management/create', [UserController::class, 'create'])->name('admin.user-management.create');
     Route::post('/admin/user-management/store', [UserController::class, 'store'])->name('admin.user-management.store');
+    Route::put('/admin/user-management/update/{user}', [UserController::class, 'update'])->name('admin.user-management.update');
+    Route::put('/admin/user-management/reset-password/{user}', [UserController::class, 'resetPassword'])->name('admin.user-management.reset-password');
 });
 
 require __DIR__ . '/settings.php';
