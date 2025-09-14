@@ -26,6 +26,8 @@
 
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
+     --color-primary-dark: var(--primary-dark);
+     --color-primary-light: var(--primary-light);
 
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
@@ -59,6 +61,9 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* 	Sunrise Pointe Primary color RGB (51,137,186), HEX: #3389ba, oklch(0.6006 0.11 237.81) */
+/* 	Sunrise Pointe Secondary color RGB (232,162,44), HEX: #e8a22c oklch(0.7619 0.1481 74.83)*/
+
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
@@ -66,9 +71,13 @@
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
+    /* --primary: oklch(0.205 0 0); */
+    --primary: oklch(0.6006 0.11 237.81);
+    --primary-dark: oklch(0.2685 0.11 237.81);
+    --primary-light: oklch(0.7908 0.11 237.81);
     --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
+    /* --secondary: oklch(0.97 0 0); */
+    --secondary: oklch(0.7619 0.1481 74.83);
     --secondary-foreground: oklch(0.205 0 0);
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.556 0 0);
@@ -103,6 +112,7 @@
     --popover: oklch(0.145 0 0);
     --popover-foreground: oklch(0.985 0 0);
     --primary: oklch(0.985 0 0);
+    --primary-dark: oklch(0.2685 0.11 237.81);
     --primary-foreground: oklch(0.205 0 0);
     --secondary: oklch(0.269 0 0);
     --secondary-foreground: oklch(0.985 0 0);
@@ -138,4 +148,10 @@
     body {
         @apply bg-background text-foreground;
     }
+}
+
+.bg-login {
+    background-image: url('../../public/assets/sunrise-1.avif');
+    background-size: cover;
+    background-position: center;
 }
